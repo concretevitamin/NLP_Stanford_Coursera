@@ -1,0 +1,11 @@
+*** ['<s>', 'then', 'bob', 'started', 'to', 'get', 'friendly', 'with', 'a', 'man', 'called', 'jane', '</s>']
+*** ['<s>', 'then', 'bob', 'started', 'to', 'get', 'friendly', 'with', 'a', 'man', 'called', 'james', '</s>']
+
+print 
+Laplace Unigram Language Model: 
+correct: 52 total: 471 accuracy: 0.110403
+-101.305384861
+Laplace Bigram Language Model: 
+correct: 64 total: 471 accuracy: 0.135881
+Stupid Backoff Language Model: 
+correct: 31 total: 471 accuracy: 0.065817

@@ -1,0 +1,70 @@
+([\d\w\.\-]+)[ ]*(at|where|@)[ ]*([\d\w \.]+) *(dot|\.) *(org|com|net|edu\b)
+
+([\d\w\.-]+)[ \(\[]*(at|where|@)[ \)\]]*([\d\w \.]+)[ \(\[]*(dot|\.)[ \)\]]*(org|com|net|edu|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|pro|tel|travel|xxx|gov|mil|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|\b)
+
+
+([\d\w\.-]+)[ \(\[]*(at|where|@)[ \)\]]*([\d\w \.]+)[ \(\[]*(dot|\.)[ \)\]]*([a-z]+\b)
+
+([\d\w\.-]+)[ \(\[]*(at|where|@)[ \)\]]*([\d\w \.\(\)\[\]-_?]+)[ \(\[]*(dot|\.)[ \)\]]*([a-z]+\b)
+
+([\d\w\.-]+)[ \(\[]*(at|where|@)[ \)\]]*([\d\w \.\(\)\[\]-_]+)[ \(\[]*(dot|\.)[ \)\]]*([a-z]+\b)
+
+([\d\w\.-]+)[ \(\[]*(at|where|@)[ \)\]]*([\d\w \.\(\)\[\]-_]+)[org|com|edu]+
+此需特殊处理. 且如果同一行有多个 email 就挂.
+
+
+
+1: for @
+([\d\w\.-]+)[ \(\[]*@[ \)\]]*([\d\w \.\(\)\[\]-_;]+) *(org|com|edu|net|gov)+\b
+
+2: for at/where
+([\d\w\.-]+)[ \(\[]+(at|where)[ \)\]]+([\d\w \.\(\)\[\]-_;]+) *(org|com|edu|net|gov)+\b
+
+3: for &#x40; in html
+([\d\w\.-]+) *(&#x40;) *([\d\w \.\(\)\[\]-_;]+) *(org|com|edu|net|gov)+\b
+
+4: for omnipresent delimiters case, like -hi-@h-i.h-i-i.co-m
+([\d\w\.-]+)[ \(\[-]*@[ \)\]-]*([\d\w \.\(\)\[\]_;-]+)\.([\d\w\.-]+)\b
+
+5: for 'followed by'
+([\d\w\.-]+)[ \(\["&;]*followed by[ \w\)\];"&]*@[ \)\]]*([\d\w \.\(\)\[\]-_;]+) *(org|com|edu|net|gov)+\b
+
+Summary: tp=30, fp=13, fn=87
+Summary: tp=36, fp=7, fn=81
+Summary: tp=36, fp=0, fn=81
+Summary: tp=38, fp=0, fn=79
+Summary: tp=41, fp=0, fn=76
+Summary: tp=114, fp=0, fn=3
+Summary: tp=116, fp=5, fn=1
+Summary: tp=116, fp=0, fn=1
+
+
+	    email: pal at cs stanford edu, but I receive more email than I can handle. Please don't be offended if I don't reply.
+
+TODO***********
+1. 增加域名后缀
+2. - 和 = 都可以成为 case 4 的 delimiter
+3. jurafsky (at) cs (dot) stanfor [DOM] edu *****
+============================================================================
+对于有 1 情况，检查 match 到 group 数字加起来是否是 10 位, 不是的话，丢弃:
+\+*1[ \)\-]*(\d+)[ \)\-\.]*(\d+)[ \-\.]*(\d+)\b(?!/)
+然后再做无 1 情况
+(?<!=)\b(\d+)[ \)\-\.]*(\d+)[ \-\.]*(\d+)\b(?!/)
+Summary: tp=113, fp=8, fn=4
+Summary: tp=110, fp=0, fn=7
+Summary: tp=113, fp=2, fn=4
+Summary: tp=112, fp=1, fn=5
+Summary: tp=112, fp=0, fn=5
+Summary: tp=116, fp=0, fn=1
+
+检查该 line 有无 phone/tel/contact/call/office/home/fax 字样?
+
+
+<LI><i><a href="http://www.amazon.com/exec/obidos/ASIN/1575860538/qid=1110995710/sr=2-1/ref=pd_bbs_b_2_1/104-3375742-1353522">
+
+
+TEL +1-650-723-0293
+Phone:  (650) 723-0293
+Tel (+1): 650-723-0293
+<a href="contact.html">TEL</a> +1&thinsp;650&thinsp;723&thinsp;0293
+三组，每组间 delimiters ('-' ' ')

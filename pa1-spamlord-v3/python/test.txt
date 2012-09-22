@@ -1,0 +1,4 @@
+testfile e zhy-_.sms@gmail.com
+testfile e zhyang.sms@gmail.com
+testfile e jurafsky@stanford.edu
+testfile e jurafsky@csli.stanford.edu
